@@ -2,7 +2,26 @@
 
 Utility functions for detecting yarn pnp when starting nvim lsp.
 
-Example usage:
+## Installation
+
+Using vim-plug
+```vimscript
+Plug 'ec965/nvim-pnp-checker'
+```
+
+Using packer.nvim
+```lua
+use {
+ 'ec965/nvim-pnp-checker'
+}
+```
+
+use {
+  'nvim-telescope/telescope.nvim',
+  requires = { {'nvim-lua/plenary.nvim'} }
+}
+
+## Usage
 
 ```lua  if lsp == "eslint" then
 local pnp_checker = require('nvim-pnp-checker')
