@@ -1,3 +1,3 @@
-# Nvim Yarn Pnp
+# nvim pnp checker
 
-Checks if your current buffer uses yarn pnp.
+Utility functions for detecting yarn pnp when starting nvim lsp.
