@@ -1,6 +1,6 @@
 # nvim pnp checker
 
-Utility functions for detecting yarn pnp when starting nvim lsp.
+Functions for detecting Yarn PnP during lsp configuration.
 
 ## Installation
 
@@ -16,11 +16,6 @@ use {
 }
 ```
 
-use {
-  'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'} }
-}
-
 ## Usage
 
 ```lua  if lsp == "eslint" then
@@ -34,7 +29,7 @@ local servers = {
 for _, lsp in ipairs(servers) do
   if lsp == "eslint" then
     if pnp_checker.check_for_pnp() then
-      opts.cmd = pnp_checker.get_pnp_cmd()
+      opts.cmd = pnp_checker.get_pnp_cmd() -- <- provides the correct eslint lsp start command
     end
   end
 
