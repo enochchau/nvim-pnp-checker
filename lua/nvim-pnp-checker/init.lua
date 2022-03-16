@@ -10,15 +10,6 @@ local function file_exists(path)
   end
 end
 
----@param bin string bin to look for
----@return string path to bin
-local function which(bin)
-  local handle = io.popen("which " .. bin)
-  local result = handle:read("*all")
-  result = string.gsub(result, "%s+", "")
-  return result
-end
-
 local function check_for_pnp()
   local lsp_roots = vim.lsp.buf.list_workspace_folders()
   local has_pnp = true
@@ -31,8 +22,8 @@ local function check_for_pnp()
 end
 
 local function get_pnp_cmd()
-  local eslint_path = which("vscode-eslint-language-server")
-  return { "yarn", "node", eslint_path, "--stdio" }
+  local default_cmd = require('lspconfig.server_configurations.eslint').default_config.cmd
+  return { "yarn", "exec", unpack(default_cmd) };
 end
 
 return {
