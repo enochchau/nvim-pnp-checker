@@ -14,7 +14,9 @@ local function check_for_pnp()
 	local lsp_roots = vim.lsp.buf.list_workspace_folders()
 	for _, root in ipairs(lsp_roots) do
 		local pnp_path = root .. "/.pnp.cjs"
-		if file_exists(pnp_path) then
+		local node_modules_path = root .. "/node_modules"
+
+		if file_exists(pnp_path) or not file_exists(node_modules_path) then
 			return true
 		end
 	end
