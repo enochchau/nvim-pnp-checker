@@ -16,9 +16,7 @@ local function check_for_pnp()
 	-- might not work on windows
 	while dir ~= "/" do
 		local pnp_path = dir .. "/.pnp.cjs"
-		print("looking for", pnp_path)
 		if file_exists(pnp_path) then
-			print("found!!")
 			return true
 		end
 
