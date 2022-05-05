@@ -11,15 +11,20 @@ local function file_exists(path)
 end
 
 local function check_for_pnp()
-	local lsp_roots = vim.lsp.buf.list_workspace_folders()
-	for _, root in ipairs(lsp_roots) do
-		local pnp_path = root .. "/.pnp.cjs"
-		local node_modules_path = root .. "/node_modules"
+	local dir = vim.fn.expand("%:p:h")
 
-		if file_exists(pnp_path) or not file_exists(node_modules_path) then
+	-- might not work on windows
+	while dir ~= "/" do
+		local pnp_path = dir .. "/.pnp.cjs"
+		print("looking for", pnp_path)
+		if file_exists(pnp_path) then
+			print("found!!")
 			return true
 		end
+
+		dir = vim.fn.fnamemodify(dir, ":h")
 	end
+
 	return false
 end
 
