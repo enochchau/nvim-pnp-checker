@@ -36,3 +36,6 @@ for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup(opts)
 end
 ```
+
+You may also need to disable [`pnpEnableEsmLoader`](https://yarnpkg.com/configuration/yarnrc/#pnpEnableEsmLoader)
+in your `.yarnrc.yml`.
