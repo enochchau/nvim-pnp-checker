@@ -1,3 +1,5 @@
+local M = {}
+
 ---@param path string file path
 ---@return boolean
 local function file_exists(path)
@@ -10,7 +12,9 @@ local function file_exists(path)
 	end
 end
 
-local function check_for_pnp()
+--- check for `.pnp.cjs`
+---@return string|nil path to `.pnp.cjs` or nil if not found
+M.find_pnp = function()
 	local dir = vim.fn.expand("%:p:h")
 
 	-- might not work on windows
@@ -23,15 +27,20 @@ local function check_for_pnp()
 		dir = vim.fn.fnamemodify(dir, ":h")
 	end
 
-	return false
+	return nil
 end
 
-local function get_pnp_cmd(pnp_path)
-	local default_cmd = require("lspconfig.server_configurations.eslint").default_config.cmd
-	return { 'NODE_OPTIONS="--require ' .. pnp_path .. '"', unpack(default_cmd) }
+--- get the cmd to use for eslint
+---@param pnp_path string path to `.pnp.cjs`
+---@return table cmd for eslint lsp server
+M.get_pnp_cmd = function(pnp_path)
+	return {
+		"node",
+		"-r",
+		pnp_path,
+		vim.fn.system("which vscode-eslint-language-server"):gsub("%s+", ""),
+		"--stdio",
+	}
 end
 
-return {
-	check_for_pnp = check_for_pnp,
-	get_pnp_cmd = get_pnp_cmd,
-}
+return M
