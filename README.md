@@ -1,6 +1,6 @@
 # nvim pnp checker
 
-Functions for detecting Yarn PnP during lsp configuration.
+Function for detecting Yarn PnP during lsp configuration.
 
 ## Installation
 
@@ -28,14 +28,20 @@ local servers = {
   "eslint",
 }
 
-for _, lsp in ipairs(servers) do
-  if lsp == "eslint" then
-    local pnp_path = pnp_checker.find_pnp()
-    if pnp_path then
-        opts.cmd = pnp_checker.get_pnp_cmd(pnp_path) -- <- provides the correct eslint lsp start command
-    end
-  end
+local opts = {}
 
-  nvim_lsp[lsp].setup(opts)
+local pnp_path = pnp_checker.find_pnp()
+if pnp_path then
+  -- https://yarnpkg.com/features/pnp#initializing-pnp
+  opts.settings = {
+    runtime = { execArgv = "-r " .. pnp_path },
+  }
 end
+nvim_lsp.eslint.setup(opts)
+```
+
+## Documentation
+
+```
+find_pnp - returns the path to `.pnp.cjs` if one exists or else `nil`
 ```

@@ -30,17 +30,4 @@ M.find_pnp = function()
 	return nil
 end
 
---- get the cmd to use for eslint
----@param pnp_path string path to `.pnp.cjs`
----@return table cmd for eslint lsp server
-M.get_pnp_cmd = function(pnp_path)
-	return {
-		"node",
-		"-r",
-		pnp_path,
-		vim.fn.system("which vscode-eslint-language-server"):gsub("%s+", ""),
-		"--stdio",
-	}
-end
-
 return M
