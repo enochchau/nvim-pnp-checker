@@ -32,10 +32,7 @@ local opts = {}
 
 local pnp_path = pnp_checker.find_pnp()
 if pnp_path then
-  -- https://yarnpkg.com/features/pnp#initializing-pnp
-  opts.settings = {
-    runtime = { execArgv = "-r " .. pnp_path },
-  }
+  opts.cmd = pnp_checker.get_eslint_pnp_cmd(pnp_path)
 end
 nvim_lsp.eslint.setup(opts)
 ```
