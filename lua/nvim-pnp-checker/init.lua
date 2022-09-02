@@ -1,32 +1,12 @@
 local M = {}
 
----@param path string file path
----@return boolean
-local function file_exists(path)
-	local f = io.open(path, "r")
-	if f ~= nil then
-		io.close(f)
-		return true
-	else
-		return false
-	end
-end
-
 --- check for `.pnp.cjs`
 ---@return string|nil path to `.pnp.cjs` or nil if not found
 M.find_pnp = function()
-	local dir = vim.fn.expand("%:p:h")
-
-	-- might not work on windows
-	while dir ~= "/" do
-		local pnp_path = dir .. "/.pnp.cjs"
-		if file_exists(pnp_path) then
-			return pnp_path
-		end
-
-		dir = vim.fn.fnamemodify(dir, ":h")
+	local res = vim.fs.find(".pnp.cjs", { upward = true, limit = 1 })
+	if #res > 0 then
+		return res[1]
 	end
-
 	return nil
 end
 
